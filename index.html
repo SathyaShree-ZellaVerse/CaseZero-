@@ -1,0 +1,385 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CaseZero</title>
+
+    
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        padding: 70px 20px;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        color: #f5f3ff;
+        background:
+            radial-gradient(
+                ellipse at top,
+                #302052 0%,
+                #151525 45%,
+                #080910 100%
+            );
+    }
+
+    h1 {
+        color: #c4b5fd;
+        font-size: clamp(42px, 8vw, 76px);
+        letter-spacing: 10px;
+        text-shadow: 0 0 28px #8b5cf6;
+        margin-bottom: 15px;
+    }
+
+    h2 {
+        margin-top: 65px;
+        font-size: clamp(24px, 5vw, 38px);
+        color: #ffffff;
+    }
+
+    p {
+        color: #b9b6ca;
+        font-size: 17px;
+        line-height: 1.8;
+    }
+
+    button {
+        margin-top: 25px;
+        padding: 16px 32px;
+        border: 1px solid #a78bfa;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #7c3aed, #4c1d95);
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 0 24px #7c3aed44;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 32px #8b5cf6aa;
+    }
+    
+.case-file {
+    max-width: 700px;
+    margin: 55px auto;
+    padding: 30px;
+    text-align: left;
+    background: #1c1b2e;
+    border: 1px solid #a78bfa;
+    border-radius: 16px;
+}
+
+.case-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.detail {
+    flex: 1;
+    min-width: 130px;
+    padding: 16px;
+    background: #29253d;
+    border-radius: 10px;
+}
+
+.detail span,
+.detail strong {
+    display: block;
+}
+
+.detail span {
+    color: #aaa3c4;
+    font-size: 11px;
+    margin-bottom: 10px;
+}
+
+.detail strong {
+    color: #ddd6fe;
+    font-size: 14px;
+}
+
+.suspect-card {
+    margin-top: 20px;
+    padding: 24px;
+    background: linear-gradient(145deg, #211d35, #12111e);
+    border: 1px solid #514273;
+    border-radius: 14px;
+    transition: 0.3s;
+}
+
+.suspect-card:hover {
+    border-color: #a78bfa;
+    box-shadow: 0 0 20px #8b5cf644;
+    transform: translateY(-3px);
+}
+
+.suspect-card h4 {
+    color: #c4b5fd;
+    font-size: 20px;
+}
+
+.suspect-card p {
+    color: #c4c0d6;
+    line-height: 1.7;
+}
+
+.suspect-card button {
+    margin-top: 10px;
+}
+
+#investigation {
+    max-width: 850px;
+    margin: 60px auto;
+    padding: 30px;
+    text-align: left;
+    background: linear-gradient(160deg, #171526, #0c0c15);
+    border: 1px solid #49396b;
+    border-radius: 18px;
+    box-shadow: 0 0 40px #7c3aed18;
+}
+
+#investigation > h2 {
+    color: #c4b5fd;
+    border-bottom: 1px solid #39304f;
+    padding-bottom: 16px;
+}
+
+#investigation h3 {
+    color: #ddd6fe;
+    margin-top: 32px;
+}
+
+#investigation button {
+    margin: 8px 5px 8px 0;
+}
+
+#clue-result,
+#alex-result,
+#maya-result,
+#ryan-result,
+#final-message {
+    color: #a7f3d0;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+#evidence-list {
+    color: #ddd6fe;
+    line-height: 2;
+}
+
+@media (max-width: 600px) {
+    #investigation {
+        padding: 18px;
+        margin: 30px 10px;
+    }
+
+    #investigation button {
+        width: 100%;
+        margin: 8px 0;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+    <h1>CASEZERO</h1>
+
+    <p>Every clue hides a secret.</p>
+
+    <h2>The Missing Prototype</h2>
+
+    <p>A valuable prototype disappeared during college fest.</p>
+
+   
+<button onclick="startGame()">Start Investigation</button>
+
+    <section class="case-file">
+    <p class="case-label">CLASSIFIED CASE FILE #001</p>
+    <h2>The Missing Prototype</h2>
+    <p>A valuable prototype disappeared during the college technology festival.</p>
+    
+<div class="case-details">
+    <div class="detail">
+        <span>CASE STATUS</span>
+        <strong>UNSOLVED</strong>
+    </div>
+
+    <div class="detail">
+        <span>SUSPECTS</span>
+        <strong>03 PEOPLE</strong>
+    </div>
+
+    <div class="detail">
+        <span>DIFFICULTY</span>
+        <strong>MEDIUM</strong>
+    </div>
+</div>
+
+</section>
+
+<script>
+   
+function startGame() {
+    document.getElementById("investigation").style.display = "block";
+}
+
+
+function checkClue(choice) {
+    const result = document.getElementById("clue-result");
+    const evidence = document.getElementById("evidence-list");
+
+    let message = "";
+    let clue = "";
+
+    if (choice === "camera") {
+        message = "You found a deleted video file!";
+        clue = "Deleted security video";
+    } else if (choice === "suspect") {
+        message = "The suspect left at 5:45 PM!";
+        clue = "Suspect's 5:45 PM statement";
+    } else {
+        message = "You found an empty case near the window!";
+        clue = "Empty prototype case";
+    }
+
+    result.textContent = message;
+
+    if (!Array.from(evidence.children).some(
+        item => item.textContent === clue
+    )) {
+        if (evidence.children.length === 1 &&
+            evidence.children[0].textContent ===
+            "No evidence collected yet.") {
+            evidence.innerHTML = "";
+        }
+
+        const item = document.createElement("li");
+        item.textContent = clue;
+        evidence.appendChild(item);
+    }
+}
+
+
+function investigateSuspect(name) {
+    const result = document.getElementById(name + "-result");
+
+    if (name === "alex") {
+        result.textContent =
+            "Alex says he was arranging the stage at 6:00 PM. Verify his alibi!";
+    } else if (name === "maya") {
+        result.textContent =
+            "Maya says she left the lab at 5:45 PM. Find out who saw her leave!";
+
+    }
+else if (name === "ryan") {
+    result.textContent =
+        "Ryan knew the camera was broken. Find out when he discovered the problem!";
+}
+
+}
+
+
+function solveCase(suspect) {
+    const result = document.getElementById("final-result");
+    const message = document.getElementById("final-message");
+
+    if (suspect === "ryan") {
+        result.textContent = "CASE SOLVED!";
+        message.textContent =
+            "You chose Ryan! In this version, Ryan is the culprit. Great detective work!";
+    } else {
+        result.textContent = "CASE STILL OPEN";
+        message.textContent =
+            "That accusation is incorrect. Review the evidence and investigate again.";
+    }
+}
+
+
+</script>
+
+<section id="investigation" style="display: none;">
+    <h2>Investigation Begins</h2>
+    <p>You are the lead detective.</p>
+    <p>Your mission: Find the missing prototype.</p>
+    <h3>First Clue</h3>
+    <p>A security camera stopped working at 6:00 PM.</p>
+    
+<h3>What will you investigate first?</h3>
+
+<button onclick="checkClue('camera')">
+    Examine the security camera
+</button>
+
+<button onclick="checkClue('suspect')">
+    Question a suspect
+</button>
+
+<button onclick="checkClue('room')">
+    Search the prototype room
+</button>
+
+<p id="clue-result"></p>
+
+<h3>Evidence Collected</h3>
+<ul id="evidence-list">
+    <li>No evidence collected yet.</li>
+</ul>
+
+<h3>Suspect Profiles</h3>
+
+<div class="suspect-card">
+    <h4>Suspect 01 — Alex</h4>
+    <p>Role: Event Coordinator</p>
+    <p>Alibi: I was arranging the stage at 6:00 PM.</p>
+    <button onclick="investigateSuspect('alex')">
+        Investigate Alex
+    </button>
+    <p id="alex-result"></p>
+</div>
+
+<div class="suspect-card">
+    <h4>Suspect 02 — Maya</h4>
+    <p>Role: Project Team Member</p>
+    <p>Alibi: I left the lab at 5:45 PM.</p>
+    <button onclick="investigateSuspect('maya')">
+        Investigate Maya
+    </button>
+    <p id="maya-result"></p>
+</div>
+
+<div class="suspect-card">
+    <h4>Suspect 03 — Ryan</h4>
+    <p>Role: Security Assistant</p>
+    <p>Alibi: The security camera stopped working.</p>
+    <button onclick="investigateSuspect('ryan')">
+        Investigate Ryan
+    </button>
+    <p id="ryan-result"></p>
+</div>
+
+<h3>Final Decision</h3>
+<p>Who do you think is responsible for the missing prototype?</p>
+
+<button onclick="solveCase('alex')">Accuse Alex</button>
+<button onclick="solveCase('maya')">Accuse Maya</button>
+<button onclick="solveCase('ryan')">Accuse Ryan</button>
+
+<h3 id="final-result"></h3>
+<p id="final-message"></p>
+
+</section>
+
+</body>
+</html>
+
